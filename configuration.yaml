@@ -1,0 +1,151 @@
+homeassistant:
+  name: Home
+  latitude: !secret latitude
+  longitude: !secret longitude
+  elevation: 10
+  unit_system: metric
+  time_zone: !secret timezone
+  customize: !include customize.yaml
+
+
+frontend: # Enables the frontend
+config: # Enables configuration UI
+updater: # Optional, allows Home Assistant developers to focus on popular components.
+discovery: # Discover some devices automatically
+conversation: # Allows you to issue voice commands from the frontend in enabled browsers
+history: # Enables support for tracking state changes over time
+logbook: # View all events in a logbook
+map: # Enables a map showing the location of tracked devices
+ios:
+sun: # Track the sun
+
+
+# Weather prediction
+sensor:
+  - platform: yr
+    name: Weather
+    forecast: 24
+    monitored_conditions:
+      - temperature
+      - symbol
+      - precipitation
+      - windSpeed
+      - pressure
+      - windDirection
+      - humidity
+      - cloudiness
+      
+  - platform: template
+    sensors:
+      iphone_battery:
+        friendly_name: "Iphone Battery"
+        unit_of_measurement: 'percent'
+        value_template: "{{ device_tracker.simonsiniphone7.attributes.battery }}"
+
+# Se
+binary_sensor:
+  - platform: workday
+    country: "NO"
+    workdays: [mon, tue, wed, thu, fri]
+    
+# Text to speech
+tts:
+  - platform: google
+    base_url: !secret tts_url
+
+# CLOUD
+cloud:
+  alexa:
+    filter:
+      include_domains:
+        - switch
+      include_entities:
+        - switch.vacuum
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+light: !include lights.yaml
+
+# XIAOMI-VACUUM
+vacuum:
+  - platform: xiaomi_miio
+    host: 192.168.1.143
+    token: !secret vacuum_token
+    name: Vacuum
+
+# DUCKDNS/SSL
+http:
+  base_url: !secret http_url
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+  api_password: !secret http_password
+
+# CONFIGURATOR
+panel_iframe:
+  configurator:
+    title: Configurator
+    icon: mdi:wrench
+    url: !secret configurator_url
+
+# ICLOUD TRACKING
+device_tracker:
+  - platform: icloud
+    username: !secret ios_username
+    password: !secret ios_password
+    account_name: Simon
+
+# SWITCHES
+switch:
+  - platform: template
+    switches:
+      vacuum:
+        friendly_name: Vacuum
+        value_template: "{{ is_state('vacuum.Vacuum', 'Cleaning') }}"
+        turn_on:
+          service: vacuum.start
+          entity_id: vacuum.Vacuum
+        turn_off:
+          service: vacuum.return_to_base
+          entity_id: vacuum.Vacuum
+#  - platform: template
+#    switches:
+      find_phone:
+        friendly_name: Find My Phone
+        value_template: "{{ is_state('input_boolean.find_my_phone', 'on') }}"
+        turn_on:
+          service: device_tracker.icloud_lost_iphone
+        turn_off:
+          service: switch.turn_off
+          data:
+            entity_id: switch.find_phone
+  - platform: wake_on_lan
+    mac_address: "10:C3:7B:6E:02:03"
+
+# BOOLEANS
+input_boolean:
+  find_my_phone:
+    name: Find My Phone
+    initial: off
+    icon: mdi:smartphone-wireless
+
+# Example configuration.yaml entry for the Telegram Bot
+telegram_bot:
+  - platform: polling
+    api_key: !secret telegram_api
+    allowed_chat_ids:
+      - !secret telegram_chatid
+
+# Example configuration.yaml entry for the notifier
+notify:
+  - name: Telegram
+    platform: telegram
+    chat_id: !secret telegram_chatid
+
+# VW CAR
+volkswagen_carnet:
+  username: !secret carnet_id
+  password: !secret carnet_password
+  update_interval: 
+    minutes: 5 # specify in minutes how often to fetch status data from carnet (optional, default 3 min, minimum 3 min)
+

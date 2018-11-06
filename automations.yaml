@@ -1,0 +1,116 @@
+- id: 1c985a4a2e34434db7189ebc636ef346
+  alias: VW CarID Climatisation on
+  trigger:
+  - entity_id: switch.wvwzzzauzfw911702_climatisation
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+  - data:
+      message: Klimaanlegg er på
+      title: E-Golf
+    service: notify.ios_simon_sin_iphone_7
+- id: 0bf3b9b711a54d7ea001482a7e635d03
+  alias: VW CarID Climatisation off
+  trigger:
+  - entity_id: switch.wvwzzzauzfw911702_climatisation
+    from: 'on'
+    platform: state
+    to: 'off'
+  action:
+  - data:
+      message: Klimaanlegg er av
+      title: E-Golf
+    service: notify.ios_simon_sin_iphone_7
+- id: 9336a921fb0543c1b347c460092f9c8e
+  alias: VW CarID Charging
+  trigger:
+  - entity_id: switch.vw_carid_charging
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+  - data:
+      message: Batteriet lades
+      title: E-Golf
+    service: notify.ios_simon_sin_iphone_7
+- id: 8ffa860b40474b288aafc9e9fee4ce21
+  alias: VW CarID Battery fully charged
+  trigger:
+  - above: '99'
+    entity_id: sensor.wvwzzzauzfw911702_battery_level
+    platform: numeric_state
+  action:
+  - data:
+      message: Batteriet er 100%
+      title: E-Golf
+    service: notify.ios_simon_sin_iphone_7
+- alias: find_my_iphone
+  trigger:
+    platform: state
+    entity_id: input_boolean.find_my_phone
+    to: 'on'
+  action:
+  - service: device_tracker.icloud_lost_iphone
+  - service: input_boolean.turn_off
+    entity_id: input_boolean.find_my_phone
+  id: c314f47311fe4cb3b4fa8475ded5311e
+- id: '1540576707188'
+  alias: Vacuum weekdays
+  trigger:
+  - at: '10:00'
+    platform: time
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  - condition: state
+    entity_id: device_tracker.simonsiniphone7
+    state: not_home
+  action:
+  - data:
+      entity_id: vacuum.vacuum
+    service: vacuum.start
+- id: '1540900686576'
+  alias: VW Charging stopped
+  trigger:
+  - entity_id: switch.wvwzzzauzfw911702_charging
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      message: Lading avbrutt
+      title: E-Golf
+    service: notify.ios_simon_sin_iphone_7
+- id: forgot_light
+  alias: Forgot lights
+  trigger:
+  - entity_id: device_tracker.simonsiniphone7
+    event: leave
+    platform: zone
+    zone: zone.home
+  condition:
+  - condition: state
+    entity_id: group.all_lights
+    state: 'on'
+  action:
+  - data:
+      message: Alle lys er på
+      title: HOME
+    service: notify.ios_simon_sin_iphone_7
+- id: '1541457544610'
+  alias: tv off when lights off
+  trigger:
+  - entity_id: group.livingroom_lights
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition:
+  - after: sunset
+    after_offset: 01:00
+    before: sunrise
+    condition: sun
+  action:
+  - service: script.turnofftv

@@ -1,0 +1,101 @@
+relax:
+  alias: Light Relax
+  sequence:
+  - data:
+      brightness: '25'
+      hs_color:
+      - 29.164
+      - 80.271
+      entity_id: light.tradfri_bulb_e27_cws_opal_600lm
+    service: light.turn_on
+  - data:
+      brightness: '25'
+      color_temp: '450'
+      transition: '2'
+      entity_id: light.tradfri_bulb_e27_ws_opal_980lm
+    service: light.turn_on
+  - data:
+      brightness: '25'
+      color_temp: '450'
+      transition: '2'
+      entity_id: light.tradfri_bulb_gu10_ws_400lm_3
+    service: light.turn_on
+  - data:
+      brightness: '25'
+      color_temp: '450'
+      transition: '2'
+      entity_id: light.tradfri_bulb_gu10_ws_400lm_4
+    service: light.turn_on
+  - data:
+      brightness: '25'
+      color_temp: '450'
+      transition: '2'
+      entity_id: light.tradfri_bulb_gu10_ws_400lm_5
+    service: light.turn_on
+everyday:
+  alias: Light Everyday
+  sequence:
+  - data:
+      brightness: '203'
+      hs_color:
+      - 29.812
+      - 65.252
+      entity_id: light.tradfri_bulb_e27_cws_opal_600lm
+    service: light.turn_on
+  - data:
+      brightness: '203'
+      color_temp: '367'
+      transition: '2'
+      entity_id: light.tradfri_bulb_e27_ws_opal_980lm
+    service: light.turn_on
+  - data:
+      brightness: '203'
+      color_temp: '367'
+      transition: '2'
+      entity_id: light.tradfri_bulb_gu10_ws_400lm_3
+    service: light.turn_on
+  - data:
+      brightness: '203'
+      color_temp: '367'
+      transition: '2'
+      entity_id: light.tradfri_bulb_gu10_ws_400lm_4
+    service: light.turn_on
+  - data:
+      brightness: '203'
+      color_temp: '367'
+      transition: '2'
+      entity_id: light.tradfri_bulb_gu10_ws_400lm_5
+    service: light.turn_on
+watchsmarttv:
+  alias: Watch Smart TV
+  sequence:
+  - data:
+      activity: Watch Smart TV
+      entity_id: remote.harmony_hub
+    service: remote.turn_on
+watchappletv:
+  alias: Watch Apple TV
+  sequence:
+  - data:
+      activity: Watch Apple TV
+      entity_id: remote.harmony_hub
+    service: remote.turn_on
+playstation:
+  alias: Play Playstation
+  sequence:
+  - data:
+      activity: Watch TV
+      entity_id: remote.harmony_hub
+    service: remote.turn_on
+turnofftv:
+  alias: Turn off TV
+  sequence:
+  - data:
+      entity_id: remote.harmony_hub
+    service: remote.turn_off
+test_telegram:
+  alias: notify telegram test
+  sequence:
+  - data:
+      message: test
+    service: notify.telegram

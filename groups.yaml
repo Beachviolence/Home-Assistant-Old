@@ -1,0 +1,161 @@
+# STUE-FANE
+livingroom:
+    name: Stue
+    view: yes
+    icon: mdi:sofa
+    entities:
+        - group.vacuum
+        - group.livingroom_lights
+        - sensor.yr_symbol
+        - sun.sun
+        - group.media_livingroom
+        
+# MOBIL-FANE
+phone:
+    name: Telefon
+    view: yes
+    icon: mdi:phone
+    entities:
+        - device_tracker.simonsiniphone7
+        - device_tracker.julie_sin_iphone
+        - sensor.julie_sin_iphone_battery_level
+        - sensor.julie_sin_iphone_battery_state
+        - switch.find_phone
+        - sensor.iphone_battery
+
+#HOMEPAGE
+default_view:
+  view: yes
+  icon: mdi:home
+  entities:
+    - device_tracker.simon_sin_iphone_7
+    - device_tracker.julie_sin_iphone
+    - group.every_light
+    - group.volkswagenswitches
+    - group.vacuum
+    - group.weather
+    - group.computer
+    - media_player.kitchen
+
+# SOVEROM-FANE
+bedroom:
+    name: Soverom
+    view: yes
+    icon: mdi:hotel
+    entities:
+        - light.bedroom_lights
+        - media_player.bathroom
+         
+livingroom_lights:
+    name: Stue | Lys
+    entities:
+        - light.spotter_stue
+        - light.tradfri_bulb_e27_ws_opal_980lm
+        - light.tradfri_bulb_e27_cws_opal_600lm
+        - script.relax
+        - script.everyday
+        
+media_livingroom:
+    name: Media i stue
+    entities:
+        - media_player.stue
+        - media_player.kitchen
+        - remote.stuaapple_tv
+        - meida_player.stuaapple_tv
+        - remote.harmony_hub
+        - script.watchsmarttv
+        - script.watchappletv
+        - script.playstation
+        - script.turnofftv
+
+#BILFANE
+volkswagendashboard:
+    name: Volkswagen
+    view: yes
+    icon: mdi:car
+    entities:
+        - group.volkswagenswitches
+        - group.volkswagensensors
+        - group.volkswagenlocation
+        - automation.vw_carid_battery_fully_charged
+        - automation.vw_carid_climatisation_on
+        - automation.vw_carid_climatisation_off
+        - automation.vw_carid_charging
+
+
+#LYS
+every_light:
+    name: Alle lys
+    entities:
+        - light.bedroom_lights
+        - light.livingroom_lights
+
+        
+# COMPUTER
+computer:
+    name: PC
+    entities:
+        - switch.wake_on_lan
+
+#WEATHER
+weather:
+    name: Vær
+    entities:
+        - sensor.weather_temperature
+        - sensor.yr_symbol
+        - sensor.weather_wind_speed
+        - sensor.weather_wind_direction
+        - sun.sun
+
+# VW
+volkswagenswitches:
+    name: Volkswagen Switches
+    control: hidden
+    entities:
+        - switch.WVWZZZAUZFW911702_charging
+        - switch.WVWZZZAUZFW911702_climatisation
+        - switch.WVWZZZAUZFW911702_window_heater
+        - lock.WVWZZZAUZFW911702_doors_locked
+        - lock.WVWZZZAUZFW911702_trunk_locked
+  
+volkswagensensors:
+    name: Volkswagen Information
+    control: hidden
+    entities:
+        - sensor.WVWZZZAUZFW911702_battery_level
+        - sensor.WVWZZZAUZFW911702_fuel_level
+        - sensor.WVWZZZAUZFW911702_charging_time_left
+        - sensor.WVWZZZAUZFW911702_odometer
+        - sensor.WVWZZZAUZFW911702_electric_range
+        - sensor.WVWZZZAUZFW911702_combustion_range
+        - sensor.WVWZZZAUZFW911702_combined_range
+        - sensor.WVWZZZAUZFW911702_last_connected
+        - sensor.WVWZZZAUZFW911702_service_inspection
+        - sensor.WVWZZZAUZFW911702_climatisation_target_temperature
+        - binary_sensor.WVWZZZAUZFW911702_parking_light
+        - binary_sensor.WVWZZZAUZFW911702_external_power
+        - binary_sensor.WVWZZZAUZFW911702_climatisation_without_external_power
+        
+volkswagenlocation:
+    name: Volkswagen Location
+    control: hidden
+    entities:
+        - device_tracker.WVWZZZAUZFW911702
+        
+# AUTOMASJONER
+automations:
+    name: Automasjoner
+    view: yes
+    icon: mdi:home-automation
+    entities:
+        - automation.forgot_lights
+        - automation.vacuum_weekdays
+        - group.all_automations
+
+# VACUUM
+vacuum:
+    name: Støvsuger
+    entities:
+        - vacuum.Vacuum
+        - automation.vacuum_weekdays
+        
