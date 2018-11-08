@@ -28,7 +28,7 @@ default_view:
   view: yes
   icon: mdi:home
   entities:
-    - device_tracker.simon_sin_iphone_7
+    - device_tracker.simonsiniphone7
     - device_tracker.julie_sin_iphone
     - group.every_light
     - group.volkswagenswitches
@@ -51,7 +51,7 @@ livingroom_lights:
     entities:
         - light.spotter_stue
         - light.tradfri_bulb_e27_ws_opal_980lm
-        - light.tradfri_bulb_e27_cws_opal_600lm
+        - light.tradfri_bulb_e27_ws_opal_980lm_2
         - script.relax
         - script.everyday
         

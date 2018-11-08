@@ -45,8 +45,10 @@ switch.WVWZZZAUZFW911702_window_heater:
   assumed_state: false
 light.tradfri_bulb_e27_cws_opal_600lm:
   friendly_name: Sofabord
+  icon: mdi:ceiling-light
 light.tradfri_bulb_e27_ws_opal_980lm:
   friendly_name: Spisebord
+  icon: mdi:ceiling-light
 light.tradfri_bulb_gu10_w_400lm:
   friendly_name: Spot 1 soverom
 light.tradfri_bulb_gu10_w_400lm_2:
@@ -106,3 +108,21 @@ light.livingroom_lights:
   icon: mdi:ceiling-light
 light.bedroom_lights:
   icon: mdi:track-light
+group.volkswagenlocation:
+  friendly_name: VW Location
+light.spotter_stue:
+  icon: mdi:track-light
+script.bedroom_everyday:
+  icon: mdi:lightbulb-on-outline
+script.bedroom_relax:
+  icon: mdi:lightbulb-on
+script.volume_down:
+  icon: mdi:volume-medium
+script.volume_up:
+  icon: mdi:volume-high
+script.volume_mute:
+  icon: mdi:volume-off
+script.play:
+  icon: mdi:play
+script.pause:
+  icon: mdi:pause

@@ -103,14 +103,32 @@
 - id: '1541457544610'
   alias: tv off when lights off
   trigger:
-  - entity_id: group.livingroom_lights
+  - entity_id: light.livingroom_lights
     from: 'on'
     platform: state
     to: 'off'
   condition:
-  - after: sunset
-    after_offset: 01:00
-    before: sunrise
-    condition: sun
+  - after: '20:00'
+    before: 06:00
+    condition: time
   action:
-  - service: script.turnofftv
+  - data:
+      entity_id: remote.harmony_hub
+    service: remote.turn_off
+  - data:
+      brightness_pct: '80'
+      entity_id: light.bedroom_lights
+    service: light.turn_on
+
+## DIMME LYS VED SOLNEDGANG
+- alias: 'dim lights at sundown'
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    data:
+      entity_id: light.livingroom_lights 
+      brightness: '25'
+      color_temp: '450'
+      transition: '900'
+    service: light.turn_on

@@ -2,7 +2,7 @@ homeassistant:
   name: Home
   latitude: !secret latitude
   longitude: !secret longitude
-  elevation: 10
+  elevation: 50
   unit_system: metric
   time_zone: !secret timezone
   customize: !include customize.yaml
@@ -19,6 +19,17 @@ map: # Enables a map showing the location of tracked devices
 ios:
 sun: # Track the sun
 
+zone:
+  - name: Haakonsvern
+    latitude: !secret hos_latitude
+    longitude: !secret hos_longitude
+    radius: 500
+    icon: mdi:castle
+  - name: SKSK
+    icon: mdi:school
+    latitude: !secret sksk_latitude
+    longitude: !secret sksk_longitude
+    radius: 300
 
 # Weather prediction
 sensor:
@@ -28,7 +39,6 @@ sensor:
     monitored_conditions:
       - temperature
       - symbol
-      - precipitation
       - windSpeed
       - pressure
       - windDirection

@@ -9,7 +9,8 @@
   name: Livingroom Lights
   entities:
     - light.tradfri_bulb_e27_ws_opal_980lm
-    - light.tradfri_bulb_e27_cws_opal_600lm
+    - light.tradfri_bulb_e27_ws_opal_980lm_2
+#    - light.tradfri_bulb_e27_cws_opal_600lm
     - light.spotter_stue
     
 - platform: group
