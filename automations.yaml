@@ -110,7 +110,7 @@
     state: 'on'
   action:
   - data:
-      brightness: '25'
+      brightness: '35'
       color_temp: '450'
       entity_id: light.livingroom_lights
       transition: '900'
