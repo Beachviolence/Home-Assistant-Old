@@ -89,11 +89,6 @@ group.livingroom_lights:
     rgb_color: if(state === 'on') return [251,210,41]; else return [54,95,140];
 script.playstation:
   icon: mdi:playstation
-  templates:
-    rgb_color:
-    - 0
-    - 0
-    - 0
 switch.wake_on_lan:
   icon: mdi:laptop
 sensor.weather_wind_speed:
@@ -126,3 +121,7 @@ script.play:
   icon: mdi:play
 script.pause:
   icon: mdi:pause
+switch.vacuum:
+  icon: mdi:flash
+script.effect:
+  icon: mdi:surround-sound

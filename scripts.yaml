@@ -55,6 +55,14 @@ volume_mute:
         device: 55477253
         command: Mute
       service: remote.send_command
+effect:
+  alias: Volume effect
+  sequence:
+    - data:
+        entity_id: remote.harmony_hub
+        device: 55477253
+        command: Effect
+      service: remote.send_command
 
 play:
   alias: Play
@@ -112,3 +120,22 @@ everyday:
         transition: '2'
         entity_id: light.livingroom_lights
       service: light.turn_on
+      
+######## BEDTIME SCRIPT #######
+bedtime:
+  alias: Bedtime
+  sequence:
+    - alias: Turn of the tv
+      service: script.turnofftv
+    - alias: livingroom lights off
+      service: light.turn_off
+      data:
+        entity_id: light.livingroom_lights
+    - delay:
+        minutes: 1
+    - alias: Bedroom lights on
+      service: light.turn_on
+      data:
+        entity_id: light.bedroom_lights
+        brightness_pct: '80'
+

@@ -44,13 +44,6 @@ sensor:
       - windDirection
       - humidity
       - cloudiness
-      
-  - platform: template
-    sensors:
-      iphone_battery:
-        friendly_name: "Iphone Battery"
-        unit_of_measurement: 'percent'
-        value_template: "{{ device_tracker.simonsiniphone7.attributes.battery }}"
 
 # Se
 binary_sensor:
@@ -102,12 +95,24 @@ panel_iframe:
     icon: mdi:console
     url: https://strandvold.duckdns.org:7681
 
-# ICLOUD TRACKING
+# TRACKING
 device_tracker:
   - platform: icloud
     username: !secret ios_username
     password: !secret ios_password
     account_name: Simon
+  - platform: nmap_tracker
+    hosts: 192.168.1.0/24
+    home_interval: 10
+
+    
+homekit:
+  filter:
+    include_entities:
+      - switch.vacuum
+      - switch.wvwzzzauzfw911702_climatisation
+      - switch.wvwzzzauzfw911702_window_heater
+      - script.bedtime
 
 # SWITCHES
 switch:
@@ -144,17 +149,17 @@ input_boolean:
     icon: mdi:smartphone-wireless
 
 # Example configuration.yaml entry for the Telegram Bot
-telegram_bot:
-  - platform: polling
-    api_key: !secret telegram_api
-    allowed_chat_ids:
-      - !secret telegram_chatid
+#telegram_bot:
+#  - platform: polling
+#    api_key: !secret telegram_api
+#    allowed_chat_ids:
+#      - !secret telegram_chatid
 
 # Example configuration.yaml entry for the notifier
-notify:
-  - name: Telegram
-    platform: telegram
-    chat_id: !secret telegram_chatid
+#notify:
+#  - name: Telegram
+#   platform: telegram
+#   chat_id: !secret telegram_chatid
 
 # VW CAR
 volkswagen_carnet:
