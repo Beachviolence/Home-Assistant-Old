@@ -21,7 +21,13 @@
     - light.tradfri_bulb_gu10_w_400lm_3
     
 - platform: group
+  name: Toras Lights
+  entities:
+    - light.tradfri_light7e2165520440000965551
+    
+- platform: group
   name: All Lights
   entities:
     - light.livingroom_lights
     - light.bedroom_lights
+    - light.toras_lights

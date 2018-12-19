@@ -8,7 +8,7 @@ homeassistant:
   customize: !include customize.yaml
 
 
-frontend: # Enables the frontend
+frontend:
 config: # Enables configuration UI
 updater: # Optional, allows Home Assistant developers to focus on popular components.
 discovery: # Discover some devices automatically
@@ -30,6 +30,9 @@ zone:
     latitude: !secret sksk_latitude
     longitude: !secret sksk_longitude
     radius: 300
+    
+lovelace:
+  mode: yaml
 
 # Weather prediction
 sensor:
@@ -73,7 +76,7 @@ light: !include lights.yaml
 # XIAOMI-VACUUM
 vacuum:
   - platform: xiaomi_miio
-    host: 192.168.1.143
+    host: 192.168.1.144
     token: !secret vacuum_token
     name: Vacuum
 

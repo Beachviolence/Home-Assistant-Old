@@ -26,25 +26,33 @@ views:
         cards:
           - type: light
             entity: light.livingroom_lights
-            tap_action: toggle
+            tap_action: 
+              action: toggle
             hold_action: more-info
             name: Stue
           - type: light
             entity: light.bedroom_lights
-            tap_action: toggle
+            tap_action: 
+              action: toggle
             name: Soverom
+          - type: light
+            entity: light.toras_lights
+            name: Toras Soverom
       - type: glance
         title: E-Golf
         show_header_toggle: false
         entities:
           - entity: switch.wvwzzzauzfw911702_charging
-            tap_action: toggle
+            tap_action: 
+              action: toggle
             name: Lading
           - entity: switch.wvwzzzauzfw911702_climatisation
-            tap_action: toggle
+            tap_action: 
+              action: toggle
             name: Klima
           - entity: switch.wvwzzzauzfw911702_window_heater
-            tap_action: toggle
+            tap_action: 
+              action: toggle
             name: Vindu
             icon: mdi:snowflake
           - entity: sensor.wvwzzzauzfw911702_battery_level
@@ -55,15 +63,14 @@ views:
         entities:
         - entity: switch.vacuum
           name: Bryter
-          tap_action: toggle
+          tap_action: 
+              action: toggle
         - entity: vacuum.vacuum
           name: Info
         - entity: automation.vacuum_weekdays
           name: Daglig støvsuging
-          tap_action: toggle
-        - entity: script.bedtime
-          name: Leggetid
-          tap_action: toggle
+          tap_action: 
+              action: toggle
       - type: glance
         title: "Vær"
         show_header_toggle: true
@@ -93,30 +100,36 @@ views:
           cards:
             - type: entity-button
               entity: light.tradfri_bulb_e27_ws_opal_980lm
-              tap_action: toggle
+              tap_action: 
+                action: toggle
               name: Spisebord
             - type: entity-button
               entity: light.tradfri_bulb_e27_ws_opal_980lm_2
-              tap_action: toggle
+              tap_action:
+                action: toggle
               name: Sofa
             - type: entity-button
               entity: light.spotter_stue
-              tap_action: toggle
+              tap_action: 
+                action: toggle
               name: Spotter
         
         - type: horizontal-stack
           cards:
             - type: entity-button
               entity: script.relax
-              tap_action: toggle
+              tap_action: 
+                action: toggle
               name: Dim
             - type: entity-button
               entity: light.livingroom_lights
-              tap_action: toggle
+              tap_action: 
+                action: toggle
               name: Alle stuelys
             - type: entity-button
               entity: script.everyday
-              tap_action: toggle
+              tap_action: 
+                action: toggle
               name: Bright
         - type: vertical-stack
           cards:
@@ -126,16 +139,20 @@ views:
               entities:
                 - entity: script.watchsmarttv
                   name: Chromecast
-                  tap_action: toggle
+                  tap_action: 
+                    action: toggle
                 - entity: script.watchappletv
                   name: Apple TV
-                  tap_action: toggle
+                  tap_action: 
+                    action: toggle
                 - entity: script.playstation
                   name: Playstation
-                  tap_action: toggle
+                  tap_action: 
+                    action: toggle
                 - entity: script.turnofftv
                   name: Turn off
-                  tap_action: toggle
+                  tap_action: 
+                    action: toggle
               show_state: false
           # - type: glance
             # entities:
@@ -156,24 +173,30 @@ views:
               - type: entity-button
                 entity: script.volume_down
                 name: Down
-                tap_action: toggle
+                tap_action: 
+                  action: toggle
               - type: entity-button
                 entity: script.volume_up
                 name: Up
-                tap_action: toggle
+                tap_action: 
+                  action: toggle
               - type: entity-button
                 entity: script.volume_mute
                 name: Mute
-                tap_action: toggle
+                tap_action: 
+                  action: toggle
               - type: entity-button
                 entity: script.play
-                tap_action: toggle
+                tap_action: 
+                  action: toggle
               - type: entity-button
                 entity: script.pause
-                tap_action: toggle
+                tap_action: 
+                  action: toggle
               - type: entity-button
                 entity: script.effect
-                tap_action: toggle
+                tap_action: 
+                  action: toggle
                 name: effect
       - type: vertical-stack
         cards:
@@ -181,6 +204,43 @@ views:
             entity: media_player.kitchen
           - type: media-control
             entity: media_player.stue
+ 
+########## SOVEROM FANE #############
+  - title: Soverom
+    icon: mdi:hotel
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: entity-button
+            entity: light.bedroom_lights
+            name: Soverom
+            tap_action: 
+              action: toggle
+          - type: entity-button
+            entity: script.bedroom_relax
+            name: Relax
+            tap_action: 
+              action: toggle
+          - type: entity-button
+            entity: script.bedroom_everyday
+            name: Everyday
+            tap_action: 
+              action: toggle
+      - type: glance
+        name: Varmeovn
+        entities: 
+          - entity: switch.tradfri_control_outlet
+            name: Bryter
+            icon: mdi:radiator
+            tap_action: 
+              action: toggle
+          - entity: automation.heater_on_before_bed
+            name: Varme kveld
+            icon: mdi:calendar-clock
+            tap_action: 
+              action: toggle
+      - type: media-control
+        entity: media_player.bathroom
         
 ############ TELEFON FANE ############
   - title: Telefon
@@ -203,27 +263,6 @@ views:
         title: PC
         entity: switch.wake_on_lan
           
-########## SOVEROM FANE #############
-  - title: Soverom
-    icon: mdi:hotel
-    cards:
-      - type: horizontal-stack
-        cards:
-          - type: entity-button
-            entity: light.bedroom_lights
-            name: Soverom
-            tap_action: toggle
-          - type: entity-button
-            entity: script.bedroom_relax
-            name: Relax
-            tap_action: toggle
-          - type: entity-button
-            entity: script.bedroom_everyday
-            name: Everyday
-            tap_action: toggle
-              
-      - type: media-control
-        entity: media_player.bathroom
   - title: Volkswagen
     icon: mdi:car
     cards:
@@ -285,3 +324,76 @@ views:
           - automation.vacuum_weekdays
           - automation.find_my_iphone
           - automation.tv_off_when_lights_off
+          
+  - title: Floor-plan
+    icon: mdi:map
+    cards:
+      - type: picture-elements
+        image: /local/second-floor.png
+        elements:
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.tradfri_bulb_e27_ws_opal_980lm_2
+            style:
+              top: 34%
+              left: 31%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.spotter_stue
+            style:
+              top: 50%
+              left: 85%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.tradfri_bulb_e27_ws_opal_980lm
+            style:
+              top: 80%
+              left: 49%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: switch.vacuum
+            style:
+              top: 92%
+              left: 67%
+          - type: state-label
+            tap_action:
+              action: toggle
+            entity: sensor.weather_temperature
+            style:
+              top: 15%
+              left: 5%
+          - type: state-label
+            tap_action:
+              action: toggle
+            entity: sensor.weather_wind_speed
+            style:
+              top: 22%
+              left: 6%
+      - type: picture-elements
+        image: /local/third-floor.png
+        elements:
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.bedroom_lights
+            style:
+              top: 32%
+              left: 16%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: switch.tradfri_control_outlet
+            style:
+              top: 45%
+              left: 5%
+          - type: state-icon
+            tap_action:
+              action: toggle
+            entity: light.toras_lights
+            style:
+              top: 68%
+              left: 16%

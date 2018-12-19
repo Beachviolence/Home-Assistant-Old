@@ -142,3 +142,30 @@
       message: Det er kuldegrader ute
       title: TEMPERATUR
     service: notify.ios_simon_sin_iphone_7
+- id: '1543413624056'
+  alias: Heater on before bed
+  trigger:
+  - at: '20:30'
+    platform: time
+  condition:
+  - above: '-1000'
+    below: '15'
+    condition: numeric_state
+    entity_id: sensor.weather_temperature
+  action:
+  - data:
+      entity_id: switch.tradfri_control_outlet
+    service: switch.turn_on
+- id: '1543414096425'
+  alias: Heater off in the morning
+  trigger:
+  - at: 07:00
+    platform: time
+  condition:
+  - condition: state
+    entity_id: binary_sensor.workday_sensor
+    state: 'on'
+  action:
+  - data:
+      entity_id: switch.tradfri_control_outlet
+    service: switch.turn_off
