@@ -89,7 +89,7 @@ panel_iframe:
   terminal:
     title: Terminal
     icon: mdi:console
-    url: https://strandvold.duckdns.org:7681
+    url: !secret ssh_address
 
 # TRACKING
 device_tracker:
