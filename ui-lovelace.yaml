@@ -11,7 +11,7 @@ views:
     cards:
       - type: glance
         entities:
-          - entity: device_tracker.simonsiniphone7
+          - entity: device_tracker.simonsiniphone7_2
             name: Simon
             icon: mdi:human-handsup
           - entity: device_tracker.julie_sin_iphone
@@ -35,42 +35,60 @@ views:
             tap_action: 
               action: toggle
             name: Soverom
-          - type: light
-            entity: light.toras_lights
-            name: Toras Soverom
-      - type: glance
-        title: E-Golf
+      - type: entities
+        #title: Alarm
         show_header_toggle: false
         entities:
-          - entity: switch.wvwzzzauzfw911702_charging
-            tap_action: 
-              action: toggle
-            name: Lading
-          - entity: switch.wvwzzzauzfw911702_climatisation
-            tap_action: 
-              action: toggle
-            name: Klima
-          - entity: switch.wvwzzzauzfw911702_window_heater
-            tap_action: 
-              action: toggle
-            name: Vindu
-            icon: mdi:snowflake
-          - entity: sensor.wvwzzzauzfw911702_battery_level
-            name: Batteri
+          - input_select.alarm
+          
+          # - type: light
+            # entity: light.toras_lights
+            # name: Toras Soverom
+      # - type: glance
+        # title: E-Golf
+        # show_header_toggle: false
+        # entities:
+          # - entity: switch.wvwzzzauzfw911702_charging
+            # tap_action: 
+              # action: toggle
+            # name: Lading
+          # - entity: switch.wvwzzzauzfw911702_climatisation
+            # tap_action: 
+              # action: toggle
+            # name: Klima
+          # - entity: switch.wvwzzzauzfw911702_window_heater
+            # tap_action: 
+              # action: toggle
+            # name: Vindu
+            # icon: mdi:snowflake
+          # - entity: sensor.wvwzzzauzfw911702_battery_level
+            # name: Batteri
       - type: glance
-        title: "Søvsuger"
+        title: "Støvsuger"
         show_header_toggle: false
+        show_state: false
         entities:
         - entity: switch.vacuum
           name: Bryter
+          icon: mdi:robot-vacuum
           tap_action: 
               action: toggle
-        - entity: vacuum.vacuum
-          name: Info
+        # - entity: vacuum.vacuum
+          # name: Info
         - entity: automation.vacuum_weekdays
-          name: Daglig støvsuging
+          name: Daglig
           tap_action: 
               action: toggle
+        - entity: script.vacuum_kitchen
+          name: Kjøkken
+          icon: mdi:silverware-fork-knife
+          tap_action:
+            action: toggle
+        - entity: script.empty_vacuum
+          name: Tøm
+          icon: mdi:delete
+          tap_action:
+            action: toggle
       - type: glance
         title: "Vær"
         show_header_toggle: true
@@ -78,13 +96,44 @@ views:
           - sensor.weather_temperature
           - sensor.weather_wind_speed
           - sensor.weather_wind_direction
-      - type: custom:mini-media-player
-        entity: media_player.kitchen
-        icon: mdi:speaker-wireless
-        show_source: small
-        hide_power: true
-        name: Sonos | Kjøkken
-        show_tts: google
+      - type: glance
+        #title: "Klima"
+        entities:
+        - entity: sensor.sn1_temperature
+          name: Temp Stue
+        - entity: sensor.sn1_humidity
+          name: Fuktighet Stue
+          icon: mdi:water-percent
+        - entity: sensor.sn2_temperature
+          name: Temp Sove
+        - entity: sensor.sn2_humidity
+          name: Fuktighet Sove
+          icon: mdi:water-percent
+      - type: vertical-stack
+        cards:
+        - type: custom:mini-media-player
+          entity: media_player.kitchen
+          icon: mdi:speaker-wireless
+          show_source: small
+          hide_power: true
+          name: Sonos | Kjøkken
+          show_tts: google
+        - type: custom:mini-media-player
+          entity: media_player.bathroom
+          icon: mdi:speaker-wireless
+          show_source: small
+          hide_power: true
+          name: Sonos | Bad
+          show_tts: google
+        # - type: custom:mini-media-player
+          # entity: media_player.soverom
+          # icon: mdi:speaker-wireless
+          # show_source: small
+          # hide_power: true
+          # name: Sonos | Soverom
+          # show_tts: google
+      
+
         
 ############## STUE FANE ###############
   - title: Stue
@@ -122,10 +171,10 @@ views:
                 action: toggle
               name: Dim
             - type: entity-button
-              entity: light.livingroom_lights
+              entity: script.leselys
               tap_action: 
                 action: toggle
-              name: Alle stuelys
+              name: Leselampe
             - type: entity-button
               entity: script.everyday
               tap_action: 
@@ -200,10 +249,27 @@ views:
                 name: effect
       - type: vertical-stack
         cards:
-          - type: media-control
-            entity: media_player.kitchen
-          - type: media-control
-            entity: media_player.stue
+        - type: custom:mini-media-player
+          entity: media_player.kitchen
+          icon: mdi:speaker-wireless
+          show_source: small
+          hide_power: true
+          name: Sonos | Kjøkken
+          show_tts: google
+        - type: custom:mini-media-player
+          entity: media_player.bathroom
+          icon: mdi:speaker-wireless
+          show_source: small
+          hide_power: true
+          name: Sonos | Bad
+          show_tts: google
+        - type: custom:mini-media-player
+          entity: media_player.soverom
+          icon: mdi:speaker-wireless
+          show_source: small
+          hide_power: true
+          name: Sonos | Soverom
+          show_tts: google
  
 ########## SOVEROM FANE #############
   - title: Soverom
@@ -241,6 +307,13 @@ views:
               action: toggle
       - type: media-control
         entity: media_player.bathroom
+      - type: glance
+        title: Brytere
+        entities:
+        - entity: switch.sonoff1
+          name: Sonoff 1
+        - entity: switch.sonoff2
+          name: Sonoff 2
         
 ############ TELEFON FANE ############
   - title: Telefon
@@ -308,22 +381,19 @@ views:
     icon: mdi:home-automation
     cards:
       - type: entities
-        entities:
-          - automation.forgot_lights
-          - automation.vacuum_weekdays
-      - type: entities
         title: all automations
         show_header_toggle: true
         entities:
-          - automation.forgot_lights
           - automation.vw_carid_battery_fully_charged
           - automation.vw_carid_charging
           - automation.vw_carid_climatisation_off
           - automation.vw_carid_climatisation_on
           - automation.vw_charging_stopped
           - automation.vacuum_weekdays
-          - automation.find_my_iphone
           - automation.tv_off_when_lights_off
+          - automation.tom_stovsuger
+          - automation.heater_off_in_the_morning
+          - automation.heater_on_before_bed
           
   - title: Floor-plan
     icon: mdi:map

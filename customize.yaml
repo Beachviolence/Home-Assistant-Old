@@ -69,6 +69,10 @@ switch.find_phone:
   icon: mdi:cellphone-wireless
 automation.vacuum_weekdays:
   icon: mdi:calendar
+  templates:
+    icon_color: >
+      if (state === 'on') return '#63ff02';
+      return '#808080';
 script.watchsmarttv:
   icon: mdi:google-chrome
 script.watchappletv:
@@ -122,7 +126,7 @@ script.play:
 script.pause:
   icon: mdi:pause
 switch.vacuum:
-  icon: mdi:flash
+  icon: mdi:robot-vacuum
 script.effect:
   icon: mdi:surround-sound
 light.tradfri_light7e2165520440000965551:
@@ -131,3 +135,19 @@ light.tradfri_bulb_e27_ws_opal_980lm_2:
   icon: mdi:ceiling-light
 switch.tradfri_control_outlet:
   icon: mdi:radiator
+light.toras_lights:
+  icon: mdi:track-light
+script.play_chill:
+  icon: mdi:music
+script.play_main:
+  icon: mdi:music
+script.play_rock:
+  icon: mdi:music
+script.all_sonos:
+  icon: mdi:speaker
+script.kb_sonos:
+  icon: mdi:speaker
+script.leselys:
+  icon: mdi:desk-lamp
+script.vacuum_kitchen:
+  icon: mdi:silverware-fork-knife

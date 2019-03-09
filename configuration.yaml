@@ -8,7 +8,7 @@ homeassistant:
   customize: !include customize.yaml
 
 
-frontend:
+frontend: !include frontend.yaml
 config: # Enables configuration UI
 updater: # Optional, allows Home Assistant developers to focus on popular components.
 discovery: # Discover some devices automatically
@@ -18,6 +18,7 @@ logbook: # View all events in a logbook
 map: # Enables a map showing the location of tracked devices
 ios:
 sun: # Track the sun
+system_health:
 
 zone:
   - name: Haakonsvern
@@ -34,19 +35,8 @@ zone:
 lovelace:
   mode: yaml
 
-# Weather prediction
-sensor:
-  - platform: yr
-    name: Weather
-    forecast: 24
-    monitored_conditions:
-      - temperature
-      - symbol
-      - windSpeed
-      - pressure
-      - windDirection
-      - humidity
-      - cloudiness
+# Sensors
+sensor: !include sensors.yaml
 
 # Se
 binary_sensor:
@@ -86,6 +76,9 @@ http:
   ssl_certificate: /ssl/fullchain.pem
   ssl_key: /ssl/privkey.pem
   api_password: !secret http_password
+  trusted_networks:
+    - 192.168.1.1
+  login_attempts_threshold: 5
 
 # CONFIGURATOR
 panel_iframe:
@@ -100,10 +93,10 @@ panel_iframe:
 
 # TRACKING
 device_tracker:
-  - platform: icloud
-    username: !secret ios_username
-    password: !secret ios_password
-    account_name: Simon
+  # - platform: icloud
+    # username: !secret ios_username
+    # password: !secret ios_password
+    # account_name: Simon
   - platform: nmap_tracker
     hosts: 192.168.1.0/24
     home_interval: 10
@@ -123,15 +116,13 @@ switch:
     switches:
       vacuum:
         friendly_name: Vacuum
-        value_template: "{{ is_state('vacuum.Vacuum', 'Cleaning') }}"
+        value_template: "{{ is_state('vacuum.Vacuum', 'cleaning') }}"
         turn_on:
-          service: vacuum.start
-          entity_id: vacuum.Vacuum
+          service: script.vacuum_livingroom
         turn_off:
           service: vacuum.return_to_base
           entity_id: vacuum.Vacuum
-#  - platform: template
-#    switches:
+          
       find_phone:
         friendly_name: Find My Phone
         value_template: "{{ is_state('input_boolean.find_my_phone', 'on') }}"
@@ -141,8 +132,27 @@ switch:
           service: switch.turn_off
           data:
             entity_id: switch.find_phone
+          
   - platform: wake_on_lan
     mac_address: "10:C3:7B:6E:02:03"
+    
+  - platform: mqtt
+    name: "Sonoff1"
+    command_topic: "cmnd/sonoff1/power"
+    state_topic: "stat/sonoff1/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+    
+  - platform: mqtt
+    name: "Sonoff2"
+    command_topic: "cmnd/sonoff2/power"
+    state_topic: "stat/sonoff2/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
 
 # BOOLEANS
 input_boolean:
@@ -150,6 +160,21 @@ input_boolean:
     name: Find My Phone
     initial: off
     icon: mdi:smartphone-wireless
+    
+input_select:
+  alarm:
+    name: Når starter du
+    options:
+      # - "07.30"
+      - "08.00"
+      # - "08.30"
+      - "09.00"
+      # - "09.30"
+      # - "10.00"
+      # - "10.30"
+      # - "11.00"
+    initial: "08.00"
+    icon: mdi:alarm
 
 # Example configuration.yaml entry for the Telegram Bot
 #telegram_bot:
@@ -165,9 +190,9 @@ input_boolean:
 #   chat_id: !secret telegram_chatid
 
 # VW CAR
-volkswagen_carnet:
-  username: !secret carnet_id
-  password: !secret carnet_password
-  update_interval: 
-    minutes: 5 # specify in minutes how often to fetch status data from carnet (optional, default 3 min, minimum 3 min)
+# volkswagen_carnet:
+  # username: !secret carnet_id
+  # password: !secret carnet_password
+  # update_interval: 
+    # minutes: 5 
 
