@@ -154,6 +154,9 @@
   - data:
       entity_id: switch.sonoff2
     service: switch.turn_on
+  - data:
+      entity_id: switch.sonoff1
+    service: switch.turn_on
 - id: '1549907033692'
   alias: Radiolights off
   trigger:
@@ -166,35 +169,22 @@
   - data:
       entity_id: switch.sonoff2
     service: switch.turn_off
-- id: '1552081279977'
-  alias: Tøm støvsuger
-  trigger:
-  - entity_id: vacuum.vacuum
-    from: cleaning
-    platform: state
-    to: docked
-  condition:
-  - after: '11:00'
-    before: '12:00'
-    weekday:
-    - wed
-    condition: time
-  action:
-  - data: {}
-    service: script.empty_vacuum
+  - data:
+      entity_id: switch.sonoff1
+    service: switch.turn_off
 - id: '1552136838463'
   alias: Lys holder seg på
   trigger:
-  - entity_id: light.tradfri_bulb_e27_ws_opal_980lm_2
+  - entity_id: light.kommode
     from: 'on'
     platform: state
     to: 'off'
   condition:
-  - after: sunset
-    after_offset: -00:30:00
-    before_offset: 00:30:00
-    condition: sun
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
   action:
+  - delay: '2'
   - data:
       brightness_pct: '80'
       entity_id: light.spotter_stue
@@ -206,7 +196,7 @@
 - id: '1552140807307'
   alias: Alarm 0800
   trigger:
-  - at: 06:50
+  - at: 06:50:00
     platform: time
   condition:
   - condition: state
@@ -217,22 +207,41 @@
     state: 'on'
   action:
   - data:
+      entity_id: media_player.soverom
+      volume_level: '0.10'
+    service: media_player.volume_set
+  - data:
+      entity_id: media_player.bathroom
+      volume_level: '0.13'
+    service: media_player.volume_set
+  - data:
       entity_id: media_player.kitchen
+      volume_level: '0.13'
+    service: media_player.volume_set
+  - data:
+      entity_id: media_player.soverom
       source: NRK P3
     service: media_player.select_source
   - data:
-      entity_id: media_player.kitchen
-      volume_level: '0.1'
-    service: media_player.volume_set
-  - delay: 05:00
+      entity_id: media_player.bathroom
+      source: NRK P3
+    service: media_player.select_source
   - data:
-      entity_id: media_player.bedroom
-      volume_level: '0.12'
-    service: media_player.volume_set
+      entity_id: light.bedroom_lights
+      brightness_pct: '80'
+      transition: '300'
+    service: light.turn_on
+  - delay: 2400
+  - data:
+      entity_id: media_player.soverom
+    service: media_player.media_pause
+  - data:
+      entity_id: media_player.bathroom
+    service: media_player.media_pause
 - id: '1552140807307'
   alias: Alarm 0900
   trigger:
-  - at: 07:50
+  - at: 07:50:00
     platform: time
   condition:
   - condition: state
@@ -243,15 +252,82 @@
     state: 'on'
   action:
   - data:
+      entity_id: media_player.soverom
+      volume_level: '0.10'
+    service: media_player.volume_set
+  - data:
+      entity_id: media_player.bathroom
+      volume_level: '0.13'
+    service: media_player.volume_set
+  - data:
       entity_id: media_player.kitchen
+      volume_level: '0.13'
+    service: media_player.volume_set
+  - data:
+      entity_id: media_player.soverom
       source: NRK P3
     service: media_player.select_source
   - data:
-      entity_id: media_player.kitchen
-      volume_level: '0.1'
-    service: media_player.volume_set
-  - delay: 05:00
+      entity_id: media_player.bathroom
+      source: NRK P3
+    service: media_player.select_source
   - data:
-      entity_id: media_player.bedroom
-      volume_level: '0.12'
-    service: media_player.volume_set
+      entity_id: light.bedroom_lights
+      brightness_pct: '80'
+      transition: '300'
+    service: light.turn_on
+  - delay: 2400
+  - data:
+      entity_id: media_player.soverom
+    service: media_player.media_pause
+  - data:
+      entity_id: media_player.bathroom
+    service: media_player.media_pause
+- id: vacuum_empty_routine
+  alias: Tøm hver torsdag
+  trigger:
+  - at: '15:00:00'
+    platform: time
+  condition:
+  - condition: time
+    weekday:
+    - thu
+  - condition: state
+    entity_id: switch.vacuum_weekdays
+    state: 'on'
+  action:
+  - entity_id: script.empty_vacuum
+    service: script.turn_on
+- id: '1553462495588'
+  alias: Test
+  trigger:
+    platform: template
+    value_template: '{% if states(''sensor.time'') == (states(''sensor.alarm_clock_time''))
+      %}true{% endif %}'
+  action:
+    service: light.turn_off
+    entity_id: light.reading_lamp
+- id: '1553555466254'
+  alias: Heater off
+  trigger:
+  - entity_id: light.livingroom_lights
+    from: 'on'
+    platform: state
+    to: 'off'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.sonoffpow2
+    service: switch.turn_off
+- id: '1553555834085'
+  alias: Heater on
+  trigger:
+  - entity_id: light.livingroom_lights
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data:
+      entity_id: switch.sonoffpow2
+    service: switch.turn_on

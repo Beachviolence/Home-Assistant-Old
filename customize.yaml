@@ -67,30 +67,16 @@ script.everyday:
   icon: mdi:lightbulb-on
 switch.find_phone:
   icon: mdi:cellphone-wireless
-automation.vacuum_weekdays:
+input_boolean.vacuum_weekdays:
   icon: mdi:calendar
   templates:
-    icon_color: >
-      if (state === 'on') return '#63ff02';
-      return '#808080';
+    icon_color: if (state === 'on') return '#63ff02'; return '#808080';
 script.watchsmarttv:
   icon: mdi:google-chrome
 script.watchappletv:
   icon: mdi:apple
 script.turnofftv:
   icon: mdi:television-off
-group.bedroom_lights:
-  icon: mdi:track-light
-  templates:
-    rgb_color: if(state === 'on') return [251,210,41]; else return [54,95,140];
-group.spot_stue:
-  icon: mdi:track-light
-  templates:
-    rgb_color: if(state === 'on') return [251,210,41]; else return [54,95,140];
-group.livingroom_lights:
-  icon: mdi:lightbulb
-  templates:
-    rgb_color: if(state === 'on') return [251,210,41]; else return [54,95,140];
 script.playstation:
   icon: mdi:playstation
 switch.wake_on_lan:
@@ -151,3 +137,7 @@ script.leselys:
   icon: mdi:desk-lamp
 script.vacuum_kitchen:
   icon: mdi:silverware-fork-knife
+switch.vacuum_weekdays:
+  icon: mdi:calendar
+switch.sonoffpow2:
+  icon: mdi:radiator

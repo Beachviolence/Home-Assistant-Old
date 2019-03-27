@@ -1,3 +1,5 @@
+#### CONFIGURATION ####
+
 homeassistant:
   name: Home
   latitude: !secret latitude
@@ -20,6 +22,8 @@ ios:
 sun: # Track the sun
 system_health:
 
+
+# ZONE
 zone:
   - name: Haakonsvern
     latitude: !secret hos_latitude
@@ -31,24 +35,46 @@ zone:
     latitude: !secret sksk_latitude
     longitude: !secret sksk_longitude
     radius: 300
-    
+
+
+# LOVELACE
 lovelace:
   mode: yaml
-
-# Sensors
+  
+# SENSORS
 sensor: !include sensors.yaml
 
-# Se
+
+# SWITCHES
+switch: !include switches.yaml
+
+# GROUPS
+group: !include groups.yaml
+
+# AUTOMATIONS
+automation: !include automations.yaml
+
+# SCRIPTS
+script: !include scripts.yaml
+
+# LIGHTS
+light: !include lights.yaml
+
+
+# BINARY SENSOR
 binary_sensor:
   - platform: workday
     country: "NO"
     workdays: [mon, tue, wed, thu, fri]
-    
-# Text to speech
+  
+  
+# TEXT TO SPEECH
 tts:
   - platform: google
     base_url: !secret tts_url
+    language: 'no'
 
+    
 # CLOUD
 cloud:
   alexa:
@@ -58,10 +84,6 @@ cloud:
       include_entities:
         - switch.vacuum
 
-group: !include groups.yaml
-automation: !include automations.yaml
-script: !include scripts.yaml
-light: !include lights.yaml
 
 # XIAOMI-VACUUM
 vacuum:
@@ -70,6 +92,7 @@ vacuum:
     token: !secret vacuum_token
     name: Vacuum
 
+    
 # DUCKDNS/SSL
 http:
   base_url: !secret http_url
@@ -80,6 +103,7 @@ http:
     - 192.168.1.1
   login_attempts_threshold: 5
 
+  
 # CONFIGURATOR
 panel_iframe:
   configurator:
@@ -91,6 +115,7 @@ panel_iframe:
     icon: mdi:console
     url: !secret ssh_address
 
+    
 # TRACKING
 device_tracker:
   # - platform: icloud
@@ -101,7 +126,8 @@ device_tracker:
     hosts: 192.168.1.0/24
     home_interval: 10
 
-    
+
+# HOMEKIT    
 homekit:
   filter:
     include_entities:
@@ -110,61 +136,13 @@ homekit:
       - switch.wvwzzzauzfw911702_window_heater
       - script.bedtime
 
-# SWITCHES
-switch:
-  - platform: template
-    switches:
-      vacuum:
-        friendly_name: Vacuum
-        value_template: "{{ is_state('vacuum.Vacuum', 'cleaning') }}"
-        turn_on:
-          service: script.vacuum_livingroom
-        turn_off:
-          service: vacuum.return_to_base
-          entity_id: vacuum.Vacuum
-          
-      find_phone:
-        friendly_name: Find My Phone
-        value_template: "{{ is_state('input_boolean.find_my_phone', 'on') }}"
-        turn_on:
-          service: device_tracker.icloud_lost_iphone
-        turn_off:
-          service: switch.turn_off
-          data:
-            entity_id: switch.find_phone
-          
-  - platform: wake_on_lan
-    mac_address: "10:C3:7B:6E:02:03"
-    
-  - platform: mqtt
-    name: "Sonoff1"
-    command_topic: "cmnd/sonoff1/power"
-    state_topic: "stat/sonoff1/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    retain: true
-    
-  - platform: mqtt
-    name: "Sonoff2"
-    command_topic: "cmnd/sonoff2/power"
-    state_topic: "stat/sonoff2/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    retain: true
-
-# BOOLEANS
-input_boolean:
-  find_my_phone:
-    name: Find My Phone
-    initial: off
-    icon: mdi:smartphone-wireless
-    
+      
+# INPUT SELECT  
 input_select:
   alarm:
     name: Når starter du
     options:
+      - "Aldri"
       # - "07.30"
       - "08.00"
       # - "08.30"
@@ -176,19 +154,7 @@ input_select:
     initial: "08.00"
     icon: mdi:alarm
 
-# Example configuration.yaml entry for the Telegram Bot
-#telegram_bot:
-#  - platform: polling
-#    api_key: !secret telegram_api
-#    allowed_chat_ids:
-#      - !secret telegram_chatid
-
-# Example configuration.yaml entry for the notifier
-#notify:
-#  - name: Telegram
-#   platform: telegram
-#   chat_id: !secret telegram_chatid
-
+    
 # VW CAR
 # volkswagen_carnet:
   # username: !secret carnet_id
@@ -196,3 +162,49 @@ input_select:
   # update_interval: 
     # minutes: 5 
 
+    
+# INPUT NUMBER    
+input_number:
+  alarm_clock_hour:
+    name: Time
+    icon: mdi:timer
+    initial: 6
+    min: 0
+    max: 23
+    step: 1
+    mode: box
+  alarm_clock_minute:
+    name: Minutt
+    icon: mdi:timer
+    initial: 30
+    min: 0
+    max: 55
+    step: 5
+    mode: box
+  alarm_clock_fade_in_minutes:
+    name: Myk oppvåkning
+    icon: mdi:gradient
+    initial: 15
+    min: 0
+    max: 30
+    step: 5 
+
+    
+# INPUT DATE TIME
+input_datetime:
+  alarm:
+    name: Time input
+    has_date: false
+    has_time: true
+
+    
+# PLANT MONITORING
+plant:
+  Plante: 
+    sensors:
+      moisture: sensor.xiaomi_miflora_moisture
+      battery: sensor.xiaomi_miflora_battery_level
+      temperature: sensor.xiaomi_miflora_temperature
+      conductivity: sensor.xiaomi_miflora_soil_conductivity
+      brightness: sensor.xiaomi_miflora_illuminance
+    min_moisture: 16

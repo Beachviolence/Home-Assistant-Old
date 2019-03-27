@@ -188,7 +188,7 @@ leselys:
   - data:
       color_temp: '250'
       brightness_pct: '100'
-      entity_id: light.tradfri_bulb_e27_cws_opal_600lm
+      entity_id: light.reading_lamp
     service: light.turn_on
 vacuum_kitchen:
   alias: vacuum_kitchen
